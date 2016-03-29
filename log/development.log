@@ -1,0 +1,429 @@
+  [1m[36m (2.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (1.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateUsers (20160329013751)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, "email" varchar NOT NULL, "encrypted_password" varchar(128) NOT NULL, "confirmation_token" varchar(128), "remember_token" varchar(128) NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_users_on_remember_token" ON "users" ("remember_token")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160329013751"]]
+  [1m[36m (2.4ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateArticles (20160329014241)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "articles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "content" varchar, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160329014241"]]
+  [1m[36m (2.5ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_remember_token' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE "users"."email" = 'theodore64@gmail.com' LIMIT 1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "remember_token") VALUES (?, ?, ?, ?, ?)  [["email", "theodore64@gmail.com"], ["encrypted_password", "$2a$10$wcIE23kz9Gr7J4xrqIHFB.x1Y/DxDmXQ19oExv3xDGym4Ma4x0YO6"], ["created_at", "2016-03-29 01:46:59.142416"], ["updated_at", "2016-03-29 01:46:59.142416"], ["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[36m (4.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "articles" ("content", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["content", "Sed tempora nemo commodi et id. Veritatis maiores et atque est modi expedita. Ipsam earum iste enim et."], ["user_id", 1], ["created_at", "2016-03-29 01:47:00.009099"], ["updated_at", "2016-03-29 01:47:00.009099"]]
+  [1m[35m (2.7ms)[0m  commit transaction
+
+
+Started GET "/" for ::1 at 2016-03-28 20:47:40 -0500
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/railties-4.2.6/lib/rails/templates/rails/welcome/index.html.erb (3.4ms)
+Completed 200 OK in 84ms (Views: 33.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/articles/index" for ::1 at 2016-03-28 20:47:48 -0500
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"index"}
+  [1m[35mArticle Load (0.4ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 0]]
+Completed 404 Not Found in 40ms (ActiveRecord: 0.8ms)
+
+ActiveRecord::RecordNotFound (Couldn't find Article with 'id'=index):
+  app/controllers/articles_controller.rb:69:in `set_article'
+
+
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (8.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.3ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (125.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (816.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (970.5ms)
+
+
+Started GET "/articles/" for ::1 at 2016-03-28 20:47:52 -0500
+Processing by ArticlesController#index as HTML
+Redirected to http://localhost:3000/sign_in
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/sign_in" for ::1 at 2016-03-28 20:47:52 -0500
+Processing by Clearance::SessionsController#new as HTML
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/_form.html.erb (49.8ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/new.html.erb within layouts/application (56.7ms)
+Completed 200 OK in 3665ms (Views: 3662.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/scaffolds.self-8bc58dfbe4df4d778c859507a758c2ff0ef6b6b3e93644ddb3b364ac56d6898c.css?body=1" for ::1 at 2016-03-28 20:47:56 -0500
+
+
+Started POST "/session" for ::1 at 2016-03-28 20:48:12 -0500
+Processing by Clearance::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "session"=>{"email"=>"theodore60@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign in"}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT 1[0m  [["email", "theodore60@gmail.com"]]
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/_form.html.erb (2.1ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/new.html.erb within layouts/application (6.7ms)
+Completed 401 Unauthorized in 69ms (Views: 46.9ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/session" for ::1 at 2016-03-28 20:48:28 -0500
+Processing by Clearance::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "session"=>{"email"=>"theodore64@gmail.com", "password"=>"[FILTERED]"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT 1  [["email", "theodore64@gmail.com"]]
+Redirected to http://localhost:3000/articles/
+Completed 302 Found in 115ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/" for ::1 at 2016-03-28 20:48:28 -0500
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.3ms)
+
+NoMethodError (undefined method `articles' for #<User:0x007fdd9f880458>):
+  app/controllers/articles_controller.rb:9:in `index'
+
+
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (12.9ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.1ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (125.0ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.8ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.8ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (102.8ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (1.0ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (228.6ms)
+
+
+Started GET "/articles/" for ::1 at 2016-03-28 20:48:56 -0500
+Processing by ArticlesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/index.html.erb within layouts/application (5.1ms)
+Completed 500 Internal Server Error in 61ms (ActiveRecord: 1.2ms)
+
+ActionView::Template::Error (undefined method `each' for nil:NilClass):
+    10:   </thead>
+    11: 
+    12:   <tbody>
+    13:     <% @articles.each do |article| %>
+    14:       <tr>
+    15:         <td><%= link_to 'Show', article %></td>
+    16:         <td><%= link_to 'Edit', edit_article_path(article) %></td>
+  app/views/articles/index.html.erb:13:in `_app_views_articles_index_html_erb___3753681679286666082_70294920238060'
+
+
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_source.erb (11.4ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (5.2ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/actionpack-4.2.6/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (124.2ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.7ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (99.3ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (223.6ms)
+
+
+Started GET "/articles/" for ::1 at 2016-03-28 20:49:18 -0500
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[35mArticle Load (0.3ms)[0m  SELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?  [["user_id", 1]]
+  Rendered articles/index.html.erb within layouts/application (54.2ms)
+Completed 200 OK in 117ms (Views: 87.4ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/scaffolds.self-8bc58dfbe4df4d778c859507a758c2ff0ef6b6b3e93644ddb3b364ac56d6898c.css?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-28 20:49:18 -0500
+
+
+Started GET "/articles/1" for ::1 at 2016-03-28 20:49:26 -0500
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1[0m  [["id", 1]]
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/show.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 35ms (Views: 31.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/articles/" for ::1 at 2016-03-28 20:50:14 -0500
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[35mArticle Load (0.2ms)[0m  SELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?  [["user_id", 1]]
+  Rendered articles/index.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 52ms (Views: 48.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/scaffolds.self-8bc58dfbe4df4d778c859507a758c2ff0ef6b6b3e93644ddb3b364ac56d6898c.css?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2016-03-28 20:50:14 -0500
+
+
+Started GET "/articles/new" for ::1 at 2016-03-28 20:50:20 -0500
+Processing by ArticlesController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/_form.html.erb (5.4ms)
+  Rendered articles/new.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 43ms (Views: 40.1ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/articles" for ::1 at 2016-03-28 20:50:22 -0500
+Processing by ArticlesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "commit"=>"Create Article"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "articles" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2016-03-29 01:50:22.633674"], ["updated_at", "2016-03-29 01:50:22.633674"]]
+  [1m[36m (2.9ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/articles/2
+Completed 302 Found in 11ms (ActiveRecord: 4.0ms)
+
+
+Started GET "/articles/2" for ::1 at 2016-03-28 20:50:22 -0500
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 2]]
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/show.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 33ms (Views: 29.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles" for ::1 at 2016-03-28 20:50:24 -0500
+Processing by ArticlesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered articles/index.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 35ms (Views: 32.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/articles/new" for ::1 at 2016-03-28 20:50:26 -0500
+Processing by ArticlesController#new as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/_form.html.erb (1.6ms)
+  Rendered articles/new.html.erb within layouts/application (5.5ms)
+Completed 200 OK in 41ms (Views: 38.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/articles/new" for ::1 at 2016-03-28 20:55:02 -0500
+Processing by ArticlesController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/_form.html.erb (20.2ms)
+  Rendered articles/new.html.erb within layouts/application (23.6ms)
+Completed 200 OK in 78ms (Views: 57.9ms | ActiveRecord: 1.6ms)
+
+
+Started GET "/assets/articles.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/scaffolds.self-8bc58dfbe4df4d778c859507a758c2ff0ef6b6b3e93644ddb3b364ac56d6898c.css?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/application.self-e80e8f2318043e8af94dddc2adad5a4f09739a8ebb323b3ab31cd71d45fd9113.css?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/jquery.self-660adc51e0224b731d29f575a6f1ec167ba08ad06ed5deca4f1e8654c135bf4c.js?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/turbolinks.self-c37727e9bd6b2735da5c311aa83fead54ed0be6cc8bd9a65309e9c5abe2cbfff.js?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/application.self-3b8dabdc891efe46b9a144b400ad69e37d7e5876bdc39dee783419a69d7ca819.js?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/articles.self-877aef30ae1b040ab8a3aba4e3e309a11d7f2612f44dde450b5c157aa5f95c05.js?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started GET "/assets/jquery_ujs.self-e87806d0cf4489aeb1bb7288016024e8de67fd18db693fe026fe3907581e53cd.js?body=1" for ::1 at 2016-03-28 20:55:02 -0500
+
+
+Started POST "/articles" for ::1 at 2016-03-28 20:55:08 -0500
+Processing by ArticlesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "article"=>{"content"=>"This is an article"}, "commit"=>"Create Article"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "articles" ("content", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)  [["content", "This is an article"], ["user_id", 1], ["created_at", "2016-03-29 01:55:08.049310"], ["updated_at", "2016-03-29 01:55:08.049310"]]
+  [1m[36m (2.3ms)[0m  [1mcommit transaction[0m
+Redirected to http://localhost:3000/articles/3
+Completed 302 Found in 11ms (ActiveRecord: 3.8ms)
+
+
+Started GET "/articles/3" for ::1 at 2016-03-28 20:55:08 -0500
+Processing by ArticlesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[35mArticle Load (0.3ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 3]]
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  Rendered articles/show.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 36ms (Views: 31.8ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles" for ::1 at 2016-03-28 20:55:10 -0500
+Processing by ArticlesController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[36mArticle Load (0.3ms)[0m  [1mSELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?[0m  [["user_id", 1]]
+  Rendered articles/index.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 39ms (Views: 34.2ms | ActiveRecord: 0.5ms)
+
+
+Started DELETE "/articles/3" for ::1 at 2016-03-28 20:55:19 -0500
+Processing by ArticlesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "id"=>"3"}
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles" WHERE "articles"."id" = ? LIMIT 1  [["id", 3]]
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (1.0ms)[0m  [1mDELETE FROM "articles" WHERE "articles"."id" = ?[0m  [["id", 3]]
+  [1m[35m (2.0ms)[0m  commit transaction
+Redirected to http://localhost:3000/articles
+Completed 302 Found in 8ms (ActiveRecord: 3.3ms)
+
+
+Started GET "/articles" for ::1 at 2016-03-28 20:55:19 -0500
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[35mArticle Load (0.1ms)[0m  SELECT "articles".* FROM "articles" WHERE "articles"."user_id" = ?  [["user_id", 1]]
+  Rendered articles/index.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 35ms (Views: 32.0ms | ActiveRecord: 0.3ms)
+
+
+Started DELETE "/sign_out" for ::1 at 2016-03-28 20:55:23 -0500
+Processing by Clearance::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."remember_token" = ?  ORDER BY "users"."id" ASC LIMIT 1[0m  [["remember_token", "01f0550e82b3d7fc4680ed6cd2511a02f51732b0"]]
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mSQL (0.5ms)[0m  [1mUPDATE "users" SET "remember_token" = ?, "updated_at" = ? WHERE "users"."id" = ?[0m  [["remember_token", "bb6a8f91cee38046fa4ff5ef46c3a32bba472174"], ["updated_at", "2016-03-29 01:55:23.902193"], ["id", 1]]
+  [1m[35m (2.8ms)[0m  commit transaction
+Redirected to http://localhost:3000/sign_in
+Completed 302 Found in 11ms (ActiveRecord: 3.7ms)
+
+
+Started GET "/sign_in" for ::1 at 2016-03-28 20:55:23 -0500
+Processing by Clearance::SessionsController#new as HTML
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/_form.html.erb (2.5ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/new.html.erb within layouts/application (7.1ms)
+Completed 200 OK in 48ms (Views: 46.9ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/articles" for ::1 at 2016-03-28 20:55:29 -0500
+Processing by ArticlesController#index as HTML
+Redirected to http://localhost:3000/sign_in
+Filter chain halted as :require_login rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/sign_in" for ::1 at 2016-03-28 20:55:29 -0500
+Processing by Clearance::SessionsController#new as HTML
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/_form.html.erb (1.8ms)
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/sessions/new.html.erb within layouts/application (6.7ms)
+Completed 200 OK in 44ms (Views: 42.4ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/passwords/new" for ::1 at 2016-03-28 20:55:33 -0500
+Processing by Clearance::PasswordsController#new as HTML
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/passwords/new.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 46ms (Views: 44.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/passwords" for ::1 at 2016-03-28 20:55:40 -0500
+Processing by Clearance::PasswordsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"[FILTERED]", "password"=>"[FILTERED]", "commit"=>"Reset password"}
+  [1m[36mUser Load (1.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = ? LIMIT 1[0m  [["email", "thepintar@gmail.com"]]
+  Rendered /Users/Divz/.rvm/gems/ruby-2.3.0/gems/clearance-1.13.0/app/views/passwords/create.html.erb within layouts/application (0.8ms)
+Completed 200 OK in 61ms (Views: 56.4ms | ActiveRecord: 1.3ms)
